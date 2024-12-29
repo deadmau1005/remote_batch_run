@@ -1,2 +1,2 @@
 # node_name node_ip user passwd
-aliyun 47.122.70.141 root 1999831ufoUFO
+aliyun xx.xx.xx.xx root *************
