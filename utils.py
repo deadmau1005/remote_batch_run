@@ -22,7 +22,7 @@ def parse_host_info(file_name):
     for line in file_pointer.readlines():
         if line.startswith('#'):
             continue
-        if re.search(filter_str, line) is not None:
+        if re.search(filter_str, line):
             host_info.append(line)
     return host_info
 

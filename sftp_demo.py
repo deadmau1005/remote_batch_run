@@ -37,6 +37,12 @@ if __name__ == '__main__':
 
         client.connect_from_pkey()
         client.open_sftp_client()
-        local_path = os.path.join(os.getcwd(), 'host_info.txt')
-        remote_path = '/home/dty/host_info.txt'
-        client.sftp_put_file(local_path=local_path, remote_path=remote_path)
+        #local_path = os.path.join(os.getcwd(), 'host_info.txt')
+        #remote_path = '/home/dty/host_info.txt'
+        #client.sftp_put(local_path=local_path, remote_path=remote_path)
+
+        local_path = "test"
+        remote_path = '/home/dty'
+        client.sftp_put_dir(local_path, remote_path)
+
+        client.close()

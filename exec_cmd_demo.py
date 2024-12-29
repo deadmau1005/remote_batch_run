@@ -35,9 +35,10 @@ if __name__ == '__main__':
         )
 
         client.connect_from_pkey()
-        cmd = 'cd /home/dty;uname -a'
+        cmd = 'source ~/.bashrc;cd /home/dty;pwd;ls'
         ret_code = client.exec_cmd(cmd, timeout=3)
         if ret_code == FAIL:
             continue
         print(ret_code)
+        client.close()
 
