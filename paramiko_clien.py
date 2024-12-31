@@ -1,3 +1,5 @@
+import time
+
 import paramiko
 import os
 import re
@@ -15,6 +17,7 @@ class Client(paramiko.SSHClient):
         self.passwd = passwd
         self.pkey = pkey
         self.sftp = None
+        self.channel = None
         super().set_missing_host_key_policy(paramiko.AutoAddPolicy())
         if self.passwd is None and self.pkey is None:
             print('password and pkey is None')
@@ -105,3 +108,27 @@ class Client(paramiko.SSHClient):
             print(f'put dir to remote fail, {e}')
             return FAIL
 
+
+    def open_channel(self):
+        self.channel = super().invoke_shell()
+
+
+    def close_channel(self):
+        self.channel.close()
+
+
+    def channel_recv(self, wait_time=3):
+        time.sleep(wait_time)
+        return self.channel.recv(102400).decode('utf-8')
+
+
+    def channel_send(self, cmd, wait_time=3):
+        if isinstance(cmd, str):
+            self.channel.send(cmd)
+            return self.channel_recv(wait_time)
+        if isinstance(cmd, list):
+            res = []
+            for _cmd in cmd:
+                self.channel.send(_cmd)
+                res.append(self.channel_recv(wait_time))
+            return res

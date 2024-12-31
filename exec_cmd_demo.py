@@ -40,5 +40,20 @@ if __name__ == '__main__':
         if ret_code == FAIL:
             continue
         print(ret_code)
+
+        client.open_channel()
+        cmd = 'uname -a\n'
+        ret_code = client.channel_send(cmd)
+        print(ret_code)
+
+
+        cmd = [
+            "cd /home/dty\n",
+            "ll\n",
+        ]
+        ret_code = client.channel_send(cmd)
+        for s in ret_code:
+            print(s)
+
         client.close()
 
